@@ -1,32 +1,77 @@
-[![Build Status](https://runbot.odoo.com/runbot/badge/flat/1/master.svg)](https://runbot.odoo.com/runbot)
-[![Tech Doc](https://img.shields.io/badge/master-docs-875A7B.svg?style=flat&colorA=8F8F8F)](https://www.odoo.com/documentation/16.0)
-[![Help](https://img.shields.io/badge/master-help-875A7B.svg?style=flat&colorA=8F8F8F)](https://www.odoo.com/forum/help-1)
-[![Nightly Builds](https://img.shields.io/badge/master-nightly-875A7B.svg?style=flat&colorA=8F8F8F)](https://nightly.odoo.com/)
-
-Odoo
+Odoo 16.0 Docker Configuration
 ----
 
-Odoo is a suite of web based open source business apps.
+This repository contains Docker configuration files for running Odoo 16.0 with PostgreSQL in a containerized environment.
 
-The main Odoo Apps include an <a href="https://www.odoo.com/page/crm">Open Source CRM</a>,
-<a href="https://www.odoo.com/app/website">Website Builder</a>,
-<a href="https://www.odoo.com/app/ecommerce">eCommerce</a>,
-<a href="https://www.odoo.com/app/inventory">Warehouse Management</a>,
-<a href="https://www.odoo.com/app/project">Project Management</a>,
-<a href="https://www.odoo.com/app/accounting">Billing &amp; Accounting</a>,
-<a href="https://www.odoo.com/app/point-of-sale-shop">Point of Sale</a>,
-<a href="https://www.odoo.com/app/employees">Human Resources</a>,
-<a href="https://www.odoo.com/app/social-marketing">Marketing</a>,
-<a href="https://www.odoo.com/app/manufacturing">Manufacturing</a>,
-<a href="https://www.odoo.com/">...</a>
-
-Odoo Apps can be used as stand-alone applications, but they also integrate seamlessly so you get
-a full-featured <a href="https://www.odoo.com">Open Source ERP</a> when you install several Apps.
-
-Getting started with Odoo
+Features
 -------------------------
+- Containerized Odoo 16.0 application
+- PostgreSQL 13 database server
+- Persistent data storage with Docker volumes
+- Custom configuration via odoo.conf
 
-For a standard installation please follow the <a href="https://www.odoo.com/documentation/16.0/administration/install/install.html">Setup instructions</a>
-from the documentation.
+Prerequisites
+-------------------------
+- Docker
+- Docker Compose
 
-To learn the software, we recommend the <a href="https://www.odoo.com/slides">Odoo eLearning</a>, or <a href="https://www.odoo.com/page/scale-up-business-game">Scale-up</a>, the <a href="https://www.odoo.com/page/scale-up-business-game">business game</a>. Developers can start with <a href="https://www.odoo.com/documentation/16.0/developer/howtos.html">the developer tutorials</a>
+Getting Started
+-------------------------
+1. Clone this repository
+```bash
+git clone https://github.com/Galuh80/Odoo-Docker.git
+```
+2. Navigate to the project directory
+3. Run Docker Compose:
+```bash
+docker-compose up -d
+```
+This will:
+- Build the Odoo container with all required dependencies
+- Start a PostgreSQL database container
+- Configure networking between the containers
+- Mount volumes for persistent data storage
+
+Configuration
+-------------------------
+The main configuration files:
+- **Dockerfile**: Defines the Odoo container environment, including system dependencies and Python requirements.
+- **docker-compose.yml**: Sets up the multi-container application with networking and volumes.
+- **odoo.conf**: Contains Odoo-specific configuration parameters.
+
+Environment Variables
+-------------------------
+The following environment variables are preconfigured:
+- **DB_HOST**: Database host (set to 'db')
+- **DB_PORT**: Database port (set to 5432)
+- **DB_USER**: Database user (set to 'odoo')
+- **DB_PASSWORD**: Database password (set to 'odoo')
+
+Volumes
+-------------------------
+Two persistent volumes are created:
+- odoo-db-data: Stores PostgreSQL database files
+- odoo-data: Stores Odoo data files
+
+Ports
+-------------------------
+The application exposes Odoo on port 8069.
+
+Customization
+-------------------------
+To customize the setup:
+- Modify odoo.conf to change Odoo settings
+- Edit docker-compose.yml to add services or change configuration
+- Update the Dockerfile if additional dependencies are required
+
+Security Notes
+-------------------------
+- This configuration includes basic security settings
+- For production environments, consider changing default passwords and implementing additional security measures
+
+Troubleshooting
+-------------------------
+If you encounter issues:
+- Check Docker logs: **docker-compose logs**
+- Verify file permissions in the container
+- Ensure all paths in configuration files are correct
